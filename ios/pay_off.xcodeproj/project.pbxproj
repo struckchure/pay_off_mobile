@@ -14,6 +14,11 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-pay_off-pay_offTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-pay_off-pay_offTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		5FBAFDFE377B4E28B1121866 /* SpaceMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A0E828F653F4A2E96AFAD8E /* SpaceMono-Bold.ttf */; };
+		3B13B626FD89408C8FE4D10E /* SpaceMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DD4044D12EB42E993168978 /* SpaceMono-BoldItalic.ttf */; };
+		0C402262B11D4BF5A6BB6196 /* SpaceMono-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D703F3744DA43F98C1ECE29 /* SpaceMono-Italic.ttf */; };
+		D60C6D663B564F65ACB96DE8 /* SpaceMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 984CDA42BE364D26ADACF74B /* SpaceMono-Regular.ttf */; };
+		E2519C791AFA4027A8E672EF /* pay_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 0805084A3BA24EC89968A622 /* pay_off.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +49,11 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = pay_off/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-pay_off-pay_offTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pay_off-pay_offTests.release.xcconfig"; path = "Target Support Files/Pods-pay_off-pay_offTests/Pods-pay_off-pay_offTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		7A0E828F653F4A2E96AFAD8E /* SpaceMono-Bold.ttf */ = {isa = PBXFileReference; name = "SpaceMono-Bold.ttf"; path = "../src/assets/fonts/SpaceMono-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6DD4044D12EB42E993168978 /* SpaceMono-BoldItalic.ttf */ = {isa = PBXFileReference; name = "SpaceMono-BoldItalic.ttf"; path = "../src/assets/fonts/SpaceMono-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4D703F3744DA43F98C1ECE29 /* SpaceMono-Italic.ttf */ = {isa = PBXFileReference; name = "SpaceMono-Italic.ttf"; path = "../src/assets/fonts/SpaceMono-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		984CDA42BE364D26ADACF74B /* SpaceMono-Regular.ttf */ = {isa = PBXFileReference; name = "SpaceMono-Regular.ttf"; path = "../src/assets/fonts/SpaceMono-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0805084A3BA24EC89968A622 /* pay_off.png */ = {isa = PBXFileReference; name = "pay_off.png"; path = "../src/assets/img/pay_off.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +132,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				D9ABC53FEA774E1383A9BE83 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +158,19 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		D9ABC53FEA774E1383A9BE83 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				7A0E828F653F4A2E96AFAD8E /* SpaceMono-Bold.ttf */,
+				6DD4044D12EB42E993168978 /* SpaceMono-BoldItalic.ttf */,
+				4D703F3744DA43F98C1ECE29 /* SpaceMono-Italic.ttf */,
+				984CDA42BE364D26ADACF74B /* SpaceMono-Regular.ttf */,
+				0805084A3BA24EC89968A622 /* pay_off.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -244,6 +268,11 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				5FBAFDFE377B4E28B1121866 /* SpaceMono-Bold.ttf in Resources */,
+				3B13B626FD89408C8FE4D10E /* SpaceMono-BoldItalic.ttf in Resources */,
+				0C402262B11D4BF5A6BB6196 /* SpaceMono-Italic.ttf in Resources */,
+				D60C6D663B564F65ACB96DE8 /* SpaceMono-Regular.ttf in Resources */,
+				E2519C791AFA4027A8E672EF /* pay_off.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
