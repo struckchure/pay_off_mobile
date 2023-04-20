@@ -88,6 +88,8 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
+def appVersionCode = Integer.parseInt(System.getenv("APP_VERSION_CODE")?: "0")
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -98,8 +100,8 @@ android {
         applicationId "com.pay_off"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode appVersionCode ?: 1
+        versionName System.getenv("APP_VERSION_NAME") ?: "0.0.0"
     }
 
     splits {
@@ -117,6 +119,17 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+
+        release {
+            storeFile file(System.getenv("RELEASE_STORE_FILE"))
+            storePassword System.getenv("RELEASE_STORE_PASSWORD")
+            keyAlias System.getenv("RELEASE_KEY_ALIAS")
+            keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+
+            // Optional, specify signing versions used
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
     }
     buildTypes {
         debug {
@@ -125,8 +138,9 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
+            signingConfig signingConfigs.release
+            // minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -169,3 +183,4 @@ dependencies {
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
