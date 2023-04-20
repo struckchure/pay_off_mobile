@@ -24,7 +24,7 @@ jobs:
 
       - name: Set app version code
         env:
-          TAG_NAME: ${{ APP_VERSION_NAME }}
+          TAG_NAME: ${{ env.APP_VERSION_NAME }}
         run: echo "::set-env name=APP_VERSION_CODE::$(sed -E 's/v(.*)\..*\..*/\1/' <<< "$TAG_NAME")"
 
       - name: Install node modules
