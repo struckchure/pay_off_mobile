@@ -24,6 +24,7 @@ jobs:
 
       - name: Set app version code
         env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
           TAG_NAME: ${{ env.APP_VERSION_NAME }}
         run: echo "::set-env name=APP_VERSION_CODE::$(sed -E 's/v(.*)\..*\..*/\1/' <<< "$TAG_NAME")"
 
