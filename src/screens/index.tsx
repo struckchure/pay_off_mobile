@@ -14,7 +14,7 @@ export default function SplashScreen() {
   }, 3000);
 
   return (
-    <View className="h-screen">
+    <View className="bg-white h-screen">
       <View className="flex flex-row w-fit h-fit m-auto">
         <Image
           source={require("../assets/img/pay_off.png")}
