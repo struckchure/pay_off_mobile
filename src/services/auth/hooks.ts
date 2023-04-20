@@ -1,5 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
+import { useNavigate } from "react-router-native";
+import { AxiosError } from "axios";
+import * as Yup from "yup";
 
 import AuthService from ".";
 import {
@@ -9,7 +13,7 @@ import {
   UserInterface,
 } from "./types";
 import { Storage } from "../../utils";
-import { useNavigate } from "react-router-native";
+import { LoginSchema, RegisterSchema } from "./schema";
 
 const authService = new AuthService();
 const storage = new Storage();
@@ -28,10 +32,11 @@ export default function useAuth() {
     storage.get("user").then((userData: any) => {
       if (userData) setUser(JSON.parse(userData));
     });
-  }, [storage.get("accessToken"), storage.get("user")]);
+  }, []);
 
-  const { mutate: login, isLoading: isLoginLoading } = useMutation({
+  const { mutate: _login, isLoading: isLoginLoading } = useMutation({
     mutationFn: (props: LoginProps) => authService.loginUser(props),
+    onMutate: () => {},
     onSuccess: async ({
       data,
       status,
@@ -47,9 +52,35 @@ export default function useAuth() {
         setIsAuthenticated(true);
       } else setIsAuthenticated(false);
     },
+    onError: (error: AxiosError<any> | Error) => {
+      if (error instanceof AxiosError) {
+        Toast.show({
+          type: "error",
+          text1: error?.response?.data?.detail || error.message,
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: error.message,
+        });
+      }
+    },
   });
 
-  const { mutate: register, isLoading: isRegisterLoading } = useMutation({
+  const login = async (props: LoginProps) => {
+    try {
+      return _login(await LoginSchema.validate(props));
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        Toast.show({
+          type: "error",
+          text1: error?.message,
+        });
+      }
+    }
+  };
+
+  const { mutate: _register, isLoading: isRegisterLoading } = useMutation({
     mutationFn: (props: RegisterProps) => authService.registerUser(props),
     onSuccess: async ({
       data,
@@ -67,7 +98,26 @@ export default function useAuth() {
         navgigate("/dashboard");
       } else setIsAuthenticated(false);
     },
+    onError: (error: AxiosError<any>) => {
+      Toast.show({
+        type: "error",
+        text1: error?.response?.data?.detail,
+      });
+    },
   });
+
+  const register = async (props: RegisterProps) => {
+    try {
+      return _register(await RegisterSchema.validate(props));
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        Toast.show({
+          type: "error",
+          text1: error?.message,
+        });
+      }
+    }
+  };
 
   const logout = async () => {
     await storage.remove("accessToken");
