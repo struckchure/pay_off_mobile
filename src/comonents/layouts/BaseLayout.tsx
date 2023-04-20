@@ -25,8 +25,8 @@ export default function BaseLayout(props: BaseLayoutProps) {
   }, []);
 
   return (
-    <View className="h-screen w-full bg-gray-50">
-      <ScrollView>{props?.children}</ScrollView>
-    </View>
+    <ScrollView>
+      <View className="h-screen w-full bg-gray-50">{props?.children}</View>
+    </ScrollView>
   );
 }
