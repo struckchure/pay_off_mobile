@@ -45,7 +45,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-caches-
       - name: Build Signed APK
-        run: sh scripts/build_release.sh
+        run: sh scripts/build.sh
 
       - uses: ncipollo/release-action@v1
         with:
