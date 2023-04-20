@@ -24,5 +24,3 @@ keytool -genkeypair \
 
 cd android
 ./gradlew assembleRelease && cd ..
-
-rm android/app/$RELEASE_STORE_FILE

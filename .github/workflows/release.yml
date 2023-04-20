@@ -44,6 +44,7 @@ jobs:
           key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-caches-
+
       - name: Build Signed APK
         run: sh scripts/build.sh
 
