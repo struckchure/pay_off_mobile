@@ -22,8 +22,7 @@ export default function RegisterScreen() {
 
   const handleRegister = () => {
     if (password !== confirmPassword) Alert.alert("password mismatch");
-    console.log({ username, email, password, user_type: userType });
-    register({ username, email, password, user_type: userType });
+    else register({ username, email, password, user_type: userType });
   };
 
   return (
