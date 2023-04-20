@@ -1,0 +1,51 @@
+name: App Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  RELEASE_STORE_PASSWORD="${{ secrets.RELEASE_STORE_PASSWORD }}"
+  RELEASE_KEY_ALIAS="${{ secrets.RELEASE_KEY_ALIAS }}"
+  RELEASE_KEY_PASSWORD="${{ secrets.RELEASE_KEY_PASSWORD }}"
+
+  APP_VERSION_NAME="{{ github.ref_name }}"
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@master
+
+      - name: Set app version code
+        env:
+          TAG_NAME: ${{ env.APP_VERSION_NAME }}
+        run: echo "::set-env name=APP_VERSION_CODE::$(sed -E 's/v(.*)\..*\..*/\1/' <<< "$TAG_NAME")"
+
+      - name: Install node modules
+        run: yarn
+
+      - name: Cache Gradle Wrapper
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+
+      - name: Cache Gradle Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-caches-
+      - name: Build Signed APK
+        run: sh scripts/build_release.sh
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "android/app/build/outputs/apk/release/*.apk"
