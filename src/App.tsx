@@ -1,14 +1,15 @@
 import * as Sentry from "@sentry/react-native";
 import React from "react";
 import { Dimensions, StatusBar, View } from "react-native";
-import Config from "react-native-config";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 
-import ReactQueryProvider from "./comonents/providers/react-query.provider";
-import Router from "./router";
+import { SENTRY_DSN } from "@env";
+import MagnusUIProvider from "@src/components/providers/magus-ui.provider";
+import ReactQueryProvider from "@src/components/providers/react-query.provider";
+import Router from "@src/router";
 
 Sentry.init({
-  dsn: Config.SENTRY_DSN,
+  dsn: SENTRY_DSN,
   tracesSampleRate: 1.0,
 });
 
@@ -18,12 +19,13 @@ function App(): JSX.Element {
 
   return (
     <ReactQueryProvider>
-      <View className={`w-[${windowWidth}] h-[${windowHeight}]`}>
-        <StatusBar />
-        <Router />
-      </View>
-
-      <Toast />
+      <MagnusUIProvider>
+        <View className={`w-[${windowWidth}] h-[${windowHeight}]`}>
+          <StatusBar />
+          <Router />
+        </View>
+        <Toast />
+      </MagnusUIProvider>
     </ReactQueryProvider>
   );
 }
