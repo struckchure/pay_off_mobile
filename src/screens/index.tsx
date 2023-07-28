@@ -2,7 +2,7 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 import { useNavigate } from "react-router-native";
 
-import useAuth from "../services/auth/hooks";
+import useAuth from "@src/services/auth/hooks";
 
 export default function SplashScreen() {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function SplashScreen() {
 
   setTimeout(() => {
     if (isAuthenticated) navigate("dashboard");
-    else navigate("onboarding");
+    else navigate("auth/login");
   }, 3000);
 
   return (

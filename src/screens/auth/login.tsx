@@ -1,26 +1,19 @@
-import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import MCIcon from "react-native-vector-icons/MaterialCommunityIcons";
-import { useLocation, useNavigate } from "react-router-native";
+import React, { useEffect, useState } from "react";
+import { Button, Div, Input, Text } from "react-native-magnus";
+import { useNavigate } from "react-router-native";
 
-import BaseLayout from "../../comonents/layouts/BaseLayout";
-import Button from "../../comonents/ui/Button";
-import Input from "../../comonents/ui/Input";
-import useAuth from "../../services/auth/hooks";
+import BaseLayout from "@src/components/layouts/BaseLayout";
+import useAuth from "@src/services/auth/hooks";
 
 export default function LoginScreen() {
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const { userType } = state;
 
   const { isAuthenticated, login } = useAuth();
 
-  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleLogin = async () => {
-    login({ username, password });
-  };
+  const handleLogin = async () => login({ email, password });
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -30,74 +23,75 @@ export default function LoginScreen() {
 
   return (
     <BaseLayout>
-      <View className="h-screen w-full">
-        <View className="flex flex-row justify-between items-start h-[20%] w-full p-4">
-          <Text className="text-primary-100 text-xl font-space-mono">
+      <Div p={20}>
+        <Div h={150}>
+          <Text fontSize={"4xl"} color="white" fontFamily="SpaceMono-Regular">
             Pay Off
           </Text>
-        </View>
+        </Div>
 
-        <View className="p-4 w-full h-full items-center justify-start">
-          <View className="flex flex-col items-start justify-start">
-            <Text className="text-primary-100 text-2xl font-space-mono">
-              Welcome back
+        <Div>
+          <Text fontSize={"2xl"} color="white" fontFamily="SpaceMono-Regular">
+            Welcome Back!
+          </Text>
+          <Text color="white">
+            We missed you while you were away, let’s pick up from where we left
+            off
+          </Text>
+        </Div>
+
+        <Div alignItems="center" justifyContent="flex-start" py={"xl"}>
+          <Input
+            bg="gray800"
+            rounded={"xl"}
+            borderColor="transparent"
+            color="white"
+            px={"xl"}
+            mt={"md"}
+            onChangeText={setEmail}
+            placeholder="Email address"
+            value={email}
+          />
+
+          <Input
+            bg="gray800"
+            rounded={"xl"}
+            borderColor="transparent"
+            color="white"
+            px={"xl"}
+            mt={"md"}
+            onChangeText={setPassword}
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+          />
+
+          <Button
+            block
+            fontFamily="SpaceMono-Regular"
+            mt={"md"}
+            onPress={handleLogin}
+            rounded={"xl"}>
+            Login
+          </Button>
+
+          <Div justifyContent="center" alignItems="center" row py={"xl"}>
+            <Text color="white" fontSize={"xl"} fontFamily="SpaceMono-Regular">
+              Don't have an account?
             </Text>
-            <Text className="text-black">
-              We missed you while you were away, let’s pick up from where we
-              left off
-            </Text>
-          </View>
-
-          <View className="flex flex-col items-start justify-start h-fit w-full py-10">
-            <Input
-              label="Email address"
-              value={username}
-              onChangeText={setUsername}
-            />
-
-            <Input
-              label="Password"
-              type="password"
-              value={password}
-              onChangeText={setPassword}
-            />
-
-            {/* <Button>
-              <View className="flex flex-row justify-between items-center">
-                <View className="flex flex-row gap-2 items-center">
-                  <View className="bg-primary-100 p-2 rounded-lg">
-                    <MCIcon name="line-scan" color={"white"} />
-                  </View>
-                  <Text className="text-primary-100 text-lg">
-                    Login with biometrics
-                  </Text>
-                </View>
-                <MCIcon name="chevron-right" color={"#721DB4"} />
-              </View>
-            </Button> */}
-
             <Button
-              containerClassName="bg-primary-100 border-0 flex flex-row justify-center items-center"
-              onClick={handleLogin}>
-              <Text className="text-white mx-4 w-fit font-space-mono-regular">
-                Login
-              </Text>
-              <MCIcon name="arrow-right" color={"white"} />
+              bg="transparent"
+              color="blue300"
+              fontFamily="SpaceMono-Regular"
+              fontSize={"xl"}
+              mx={"md"}
+              onPress={() => navigate("/auth/register/")}
+              p={"none"}>
+              Sign Up
             </Button>
-
-            <View className="mx-auto flex flex-row items-center justify-center">
-              <Text className="text-gray-700">Don't have an account?</Text>
-              <Text
-                className="text-primary-200 mx-2"
-                onPress={() => {
-                  navigate("/auth/register/", { state: { userType } });
-                }}>
-                Sign Up
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
+          </Div>
+        </Div>
+      </Div>
     </BaseLayout>
   );
 }

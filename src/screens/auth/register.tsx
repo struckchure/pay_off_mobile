@@ -1,109 +1,135 @@
-import { Alert, Text, View } from "react-native";
-import MCIcon from "react-native-vector-icons/MaterialCommunityIcons";
-import { useLocation, useNavigate } from "react-router-native";
+import React, { useState } from "react";
+import { Alert } from "react-native";
+import { Button, Div, Input, Text } from "react-native-magnus";
+import { useNavigate } from "react-router-native";
 
-import { useState } from "react";
-import BaseLayout from "../../comonents/layouts/BaseLayout";
-import Button from "../../comonents/ui/Button";
-import Input from "../../comonents/ui/Input";
-import useAuth from "../../services/auth/hooks";
+import BaseLayout from "@src/components/layouts/BaseLayout";
+import useAuth from "@src/services/auth/hooks";
 
 export default function RegisterScreen() {
   const { register } = useAuth();
 
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const { userType } = state;
 
-  const [username, setUsername] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   const handleRegister = () => {
     if (password !== confirmPassword) Alert.alert("password mismatch");
-    else register({ username, email, password, user_type: userType });
+    else register({ firstName, lastName, email, password });
   };
 
   return (
     <BaseLayout>
-      <View className="h-screen w-full">
-        <View className="flex flex-row justify-between items-start h-[20%] w-full p-4">
-          <Text className="text-primary-100 text-xl font-rubik">Pay-Less</Text>
-        </View>
+      <Div p={20}>
+        <Div h={150}>
+          <Text fontSize={"4xl"} color="white" fontFamily="SpaceMono-Regular">
+            Pay Off
+          </Text>
+        </Div>
 
-        <View className="p-4 w-full h-full items-center justify-start">
-          <View className="flex flex-col items-start justify-start">
-            <Text className="text-primary-100 font-bold text-2xl">
-              Get started
+        <Div>
+          <Text fontSize={"2xl"} color="white" fontFamily="SpaceMono-Regular">
+            Get started
+          </Text>
+          <Text color="white">
+            Fill in these forms to get started, we can't wait to connect with
+            you
+          </Text>
+        </Div>
+
+        <Div alignItems="center" justifyContent="flex-start" py={"xl"}>
+          <Input
+            bg="gray800"
+            rounded={"xl"}
+            borderColor="transparent"
+            color="white"
+            px={"xl"}
+            mt={"md"}
+            onChangeText={setFirstName}
+            placeholder="First name"
+            value={firstName}
+          />
+
+          <Input
+            bg="gray800"
+            rounded={"xl"}
+            borderColor="transparent"
+            color="white"
+            px={"xl"}
+            mt={"md"}
+            onChangeText={setLastName}
+            placeholder="Last name"
+            value={lastName}
+          />
+
+          <Input
+            bg="gray800"
+            rounded={"xl"}
+            borderColor="transparent"
+            color="white"
+            px={"xl"}
+            mt={"md"}
+            onChangeText={setEmail}
+            placeholder="Email address"
+            value={email}
+          />
+
+          <Input
+            bg="gray800"
+            rounded={"xl"}
+            borderColor="transparent"
+            color="white"
+            px={"xl"}
+            mt={"md"}
+            onChangeText={setPassword}
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+          />
+
+          <Input
+            bg="gray800"
+            rounded={"xl"}
+            borderColor="transparent"
+            color="white"
+            px={"xl"}
+            mt={"md"}
+            onChangeText={setConfirmPassword}
+            placeholder="Confirm password"
+            secureTextEntry
+            value={confirmPassword}
+          />
+
+          <Button
+            block
+            fontFamily="SpaceMono-Regular"
+            mt={"md"}
+            onPress={handleRegister}
+            rounded={"xl"}>
+            Register
+          </Button>
+
+          <Div justifyContent="center" alignItems="center" row py={"xl"}>
+            <Text color="white" fontSize={"xl"} fontFamily="SpaceMono-Regular">
+              Already have an account?
             </Text>
-            <Text className="text-black">
-              Fill in these forms to get started, we can't wait to connect with
-              you
-            </Text>
-          </View>
-
-          <View className="flex flex-col items-start justify-start h-fit w-full py-10">
-            <Input
-              label="Username"
-              value={username}
-              onChangeText={setUsername}
-            />
-
-            <Input
-              label="Email address"
-              value={email}
-              onChangeText={setEmail}
-            />
-
-            <Input
-              label="Password"
-              type="password"
-              value={password}
-              onChangeText={setPassword}
-            />
-
-            <Input
-              label="Confirm password"
-              type="password"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
-
-            <Button>
-              <View className="flex flex-row justify-between items-center">
-                <View className="flex flex-row gap-2 items-center">
-                  <View className="bg-primary-100 p-2 rounded-lg">
-                    <MCIcon name="line-scan" color={"white"} />
-                  </View>
-                  <Text className="text-primary-100 text-lg">
-                    Setup biometrics
-                  </Text>
-                </View>
-                <MCIcon name="chevron-right" color={"#721DB4"} />
-              </View>
-            </Button>
-
             <Button
-              containerClassName="bg-primary-100 border-0 flex flex-row justify-center items-center"
-              onClick={handleRegister}>
-              <Text className="text-white mx-4 w-fit">Create account</Text>
-              <MCIcon name="arrow-right" color={"white"} />
+              bg="transparent"
+              color="blue300"
+              fontFamily="SpaceMono-Regular"
+              fontSize={"xl"}
+              mx={"md"}
+              onPress={() => navigate("/auth/login/")}
+              p={"none"}>
+              Sign In
             </Button>
-
-            <View className="mx-auto flex flex-row items-center justify-center">
-              <Text className="text-gray-700">Already have an account?</Text>
-              <Text
-                className="text-primary-200 mx-2"
-                onPress={() => {
-                  navigate("/auth/login/", { state: { userType } });
-                }}>
-                Sign In
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
+          </Div>
+        </Div>
+      </Div>
     </BaseLayout>
   );
 }

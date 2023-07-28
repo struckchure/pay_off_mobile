@@ -1,15 +1,19 @@
-import { USER_TYPES } from "../../constants";
-
 export interface LoginProps {
-  username: string;
+  email: string;
   password: string;
 }
 
 export interface UserInterface {
   id: string;
+  createdAt: string;
+  updatedAt: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  user_type: string;
+  userType: string;
+  isActive: boolean;
   username: string;
+  bvn: string | null;
 }
 
 export interface AuthResponse extends UserInterface {
@@ -17,15 +21,15 @@ export interface AuthResponse extends UserInterface {
 }
 
 export interface Tokens {
-  access: string;
-  refresh: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface RegisterProps {
-  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
-  user_type: USER_TYPES;
 }
 
 export interface ErrorResponse {

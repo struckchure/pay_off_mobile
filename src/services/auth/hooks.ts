@@ -1,19 +1,19 @@
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { useNavigate } from "react-router-native";
-import { AxiosError } from "axios";
 import * as Yup from "yup";
 
-import AuthService from ".";
+import AuthService from "@src/services/auth";
+import { LoginSchema, RegisterSchema } from "@src/services/auth/schema";
 import {
-  LoginProps,
   AuthResponse,
+  LoginProps,
   RegisterProps,
   UserInterface,
-} from "./types";
-import { Storage } from "../../utils";
-import { LoginSchema, RegisterSchema } from "./schema";
+} from "@src/services/auth/types";
+import { Storage } from "@src/shared/storage";
 
 const authService = new AuthService();
 const storage = new Storage();
@@ -45,8 +45,8 @@ export default function useAuth() {
       status: number;
     }) => {
       if (status === 200) {
-        await storage.set("accessToken", data.tokens.access);
-        await storage.set("refreshToken", data.tokens.refresh);
+        await storage.set("accessToken", data.tokens.accessToken);
+        await storage.set("refreshToken", data.tokens.refreshToken);
         await storage.set("user", JSON.stringify(data));
 
         setIsAuthenticated(true);
@@ -56,7 +56,7 @@ export default function useAuth() {
       if (error instanceof AxiosError) {
         Toast.show({
           type: "error",
-          text1: error?.response?.data?.detail || error.message,
+          text1: error?.response?.data?.message || error.message,
         });
       } else {
         Toast.show({
@@ -90,8 +90,8 @@ export default function useAuth() {
       status: number;
     }) => {
       if (status === 201) {
-        await storage.set("accessToken", data.tokens.access);
-        await storage.set("refreshToken", data.tokens.refresh);
+        await storage.set("accessToken", data.tokens.accessToken);
+        await storage.set("refreshToken", data.tokens.refreshToken);
         await storage.set("user", JSON.stringify(data));
 
         setIsAuthenticated(true);
@@ -101,7 +101,7 @@ export default function useAuth() {
     onError: (error: AxiosError<any>) => {
       Toast.show({
         type: "error",
-        text1: error?.response?.data?.detail,
+        text1: error?.response?.data?.message || error.message,
       });
     },
   });
@@ -124,7 +124,7 @@ export default function useAuth() {
     await storage.remove("refreshToken");
     await storage.remove("user");
 
-    navgigate("/onboarding");
+    navgigate("/auth/login");
   };
 
   return {

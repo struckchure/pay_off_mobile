@@ -1,41 +1,70 @@
 import React from "react";
-import { Text, View } from "react-native";
-import MCIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Button, Div, Header, Icon, Text } from "react-native-magnus";
+import { useNavigate } from "react-router-native";
 
-import BaseLayout from "../../comonents/layouts/BaseLayout";
-import Button from "../../comonents/ui/Button";
-import useAuth from "../../services/auth/hooks";
+import BaseLayout from "@src/components/layouts/BaseLayout";
+import useAuth from "@src/services/auth/hooks";
 
 export default function SettingScreen() {
   const { logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <BaseLayout>
-      <View className="h-screen">
-        <View className="py-2 px-4">
-          <Button containerClassName="gap-2 p-0 m-0 w-[80px] border-0 flex flex-row items-center">
-            <MCIcon name="arrow-left" color={"black"} size={20} />
-            <Text className="font-bold text-lg text-black tracking-wide">
-              Settings
-            </Text>
+      <Header
+        p="lg"
+        bg="transparent"
+        prefix={
+          <Button bg="transparent" onPress={() => navigate(-1)}>
+            <Icon
+              name="arrow-left"
+              fontFamily="Feather"
+              fontSize="4xl"
+              color="white"
+            />
           </Button>
-        </View>
+        }
+        color="black"
+        textAlign="left">
+        <Text color="white" fontSize={"xl"}>
+          Settings
+        </Text>
+      </Header>
 
-        <View className="px-6 h-[70%]">
-          <Text>Mid</Text>
-        </View>
-
-        <View className="px-6">
+      <BaseLayout.Container>
+        <Div>
           <Button
-            containerClassName="bg-primary-100 border-0 flex flex-row justify-center items-center"
-            onClick={logout}>
-            <Text className="text-white mx-4 w-fit font-space-mono-regular">
-              Log out
-            </Text>
-            <MCIcon name="arrow-right" color={"white"} />
+            bg="gray800"
+            block
+            color="white"
+            h={60}
+            mb={10}
+            rounded={"xl"}>
+            Support
           </Button>
-        </View>
-      </View>
+
+          <Button
+            bg="gray800"
+            block
+            color="white"
+            h={60}
+            mb={10}
+            rounded={"xl"}>
+            About
+          </Button>
+
+          <Button
+            bg="gray800"
+            block
+            color="white"
+            h={60}
+            mb={10}
+            onPress={logout}
+            rounded={"xl"}>
+            Log out
+          </Button>
+        </Div>
+      </BaseLayout.Container>
     </BaseLayout>
   );
 }

@@ -1,5 +1,9 @@
-import axios from "../axios";
-import { LoginProps, AuthResponse, RegisterProps } from "./types";
+import {
+  AuthResponse,
+  LoginProps,
+  RegisterProps,
+} from "@src/services/auth/types";
+import axios from "@src/shared/axios";
 
 export default class AuthService {
   async loginUser(

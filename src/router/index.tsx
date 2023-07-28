@@ -1,20 +1,19 @@
+import React from "react";
 import { NativeRouter, Route, Routes } from "react-router-native";
 
-import SplashScreen from "../screens";
-import OnboardingScreen from "../screens/onboarding";
+import SplashScreen from "@src/screens";
 
-import LoginScreen from "../screens/auth/login";
-import RegisterScreen from "../screens/auth/register";
+import LoginScreen from "@src/screens/auth/login";
+import RegisterScreen from "@src/screens/auth/register";
 
-import DashboardScreen from "../screens/dashboard";
-import SettingScreen from "../screens/dashboard/settings";
+import DashboardScreen from "@src/screens/dashboard";
+import SettingScreen from "@src/screens/dashboard/settings";
 
 export default function Router() {
   return (
     <NativeRouter>
       <Routes>
         <Route path="/" element={<SplashScreen />} />
-        <Route path="/onboarding/" element={<OnboardingScreen />} />
 
         <Route path="/auth/login/" element={<LoginScreen />} />
         <Route path="/auth/register/" element={<RegisterScreen />} />
