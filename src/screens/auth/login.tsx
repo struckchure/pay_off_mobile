@@ -13,17 +13,15 @@ export default function LoginScreen() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleLogin = async () => login({ email, password });
+  const handleLogin = () => login({ email, password });
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/dashboard");
-    }
+    if (isAuthenticated) navigate("/dashboard");
   }, [isAuthenticated]);
 
   return (
     <BaseLayout>
-      <Div p={20}>
+      <BaseLayout.Container>
         <Div h={150}>
           <Text fontSize={"4xl"} color="white" fontFamily="SpaceMono-Regular">
             Pay Off
@@ -91,7 +89,7 @@ export default function LoginScreen() {
             </Button>
           </Div>
         </Div>
-      </Div>
+      </BaseLayout.Container>
     </BaseLayout>
   );
 }

@@ -24,7 +24,7 @@ export default function RegisterScreen() {
 
   return (
     <BaseLayout>
-      <Div p={20}>
+      <BaseLayout.Container>
         <Div h={150}>
           <Text fontSize={"4xl"} color="white" fontFamily="SpaceMono-Regular">
             Pay Off
@@ -35,10 +35,7 @@ export default function RegisterScreen() {
           <Text fontSize={"2xl"} color="white" fontFamily="SpaceMono-Regular">
             Get started
           </Text>
-          <Text color="white">
-            Fill in these forms to get started, we can't wait to connect with
-            you
-          </Text>
+          <Text color="white">We're thrilled to have you onboard!</Text>
         </Div>
 
         <Div alignItems="center" justifyContent="flex-start" py={"xl"}>
@@ -129,7 +126,7 @@ export default function RegisterScreen() {
             </Button>
           </Div>
         </Div>
-      </Div>
+      </BaseLayout.Container>
     </BaseLayout>
   );
 }
