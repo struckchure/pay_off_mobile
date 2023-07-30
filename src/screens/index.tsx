@@ -1,29 +1,35 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { useWindowDimensions } from "react-native";
+import { Div, Image, Text } from "react-native-magnus";
 import { useNavigate } from "react-router-native";
 
 import useAuth from "@src/services/auth/hooks";
 
 export default function SplashScreen() {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  useAuth({
+    onAuthSuccess: () => {
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 3000);
+    },
+    onAuthFailure: () => {
+      setTimeout(() => {
+        navigate("/auth/login");
+      }, 3000);
+    },
+  });
 
-  setTimeout(() => {
-    if (isAuthenticated) navigate("dashboard");
-    else navigate("auth/login");
-  }, 3000);
+  const { height } = useWindowDimensions();
 
   return (
-    <View className="bg-white h-screen">
-      <View className="flex flex-row w-fit h-fit m-auto">
-        <Image
-          source={require("../assets/img/pay_off.png")}
-          className="w-10 h-10 rounded-lg"
-        />
-        <Text className="text-3xl text-black m-auto w-fit text-center font-space-mono">
+    <Div bg="white" justifyContent="center" alignItems="center" h={height}>
+      <Div row>
+        <Image source={require("../assets/img/pay_off.png")} w={50} h={50} />
+        <Text fontFamily="SpaceMono-Regular" color="black" fontSize={"4xl"}>
           Pay Off
         </Text>
-      </View>
-    </View>
+      </Div>
+    </Div>
   );
 }
