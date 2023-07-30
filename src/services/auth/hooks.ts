@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Toast from "react-native-toast-message";
 import { useNavigate } from "react-router-native";
 import * as Yup from "yup";
@@ -18,20 +18,31 @@ import { Storage } from "@src/shared/storage";
 const authService = new AuthService();
 const storage = new Storage();
 
-export default function useAuth() {
+interface UseAuthProps {
+  onAuthSuccess?: () => void;
+  onAuthFailure?: () => void;
+}
+
+export default function useAuth(props?: UseAuthProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<UserInterface>();
 
   const navgigate = useNavigate();
 
   useEffect(() => {
-    storage.get("accessToken").then(token => {
-      if (token) setIsAuthenticated(true);
-    });
+    async function checkAuthentication() {
+      const userData = await storage.get("user");
 
-    storage.get("user").then((userData: any) => {
-      if (userData) setUser(JSON.parse(userData));
-    });
+      if (userData) {
+        setIsAuthenticated(true);
+        setUser(JSON.parse(userData));
+
+        props?.onAuthSuccess?.();
+      } else {
+        props?.onAuthFailure?.();
+      }
+    }
+    checkAuthentication();
   }, []);
 
   const { mutate: _login, isLoading: isLoginLoading } = useMutation({

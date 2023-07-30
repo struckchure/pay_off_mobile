@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { Linking } from "react-native";
-import InAppBrowser from "react-native-inappbrowser-reborn";
 
 import WalletService from "@src/services/wallet";
 import { FundWalletPayload } from "@src/services/wallet/types";
@@ -14,20 +14,15 @@ export default function useWallet() {
   });
 
   const { mutate: fundWallet } = useMutation({
-    mutationFn: (payload: FundWalletPayload) => {
-      return walletService.fundWallet(payload);
-    },
+    mutationFn: (payload: FundWalletPayload) =>
+      walletService.fundWallet(payload),
     async onSuccess(data) {
       if (data?.data) {
-        if (await InAppBrowser.isAvailable()) {
-          await InAppBrowser.open(data.data.link, {
-            enableUrlBarHiding: true,
-            enableDefaultShare: false,
-          });
-        } else {
-          Linking.openURL(data.data.link);
-        }
+        Linking.openURL(data.data.link);
       }
+    },
+    onError: (error: AxiosError<any>) => {
+      console.log(error.response?.data);
     },
   });
 

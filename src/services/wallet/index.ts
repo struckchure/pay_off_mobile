@@ -1,9 +1,10 @@
-import axios from "@src/shared/axios";
+import { CALLBACK_URL } from "@env";
 import {
   FundWalletPayload,
   FundWalletResponse,
   WalletInterface,
 } from "@src/services/wallet/types";
+import axios from "@src/shared/axios";
 
 export default class WalletService {
   async getWallet(): Promise<{ data: WalletInterface; status: number }> {
@@ -21,7 +22,10 @@ export default class WalletService {
     const { data, status } = await axios({
       url: "/wallet/fund/",
       method: "POST",
-      data: { ...fundWalletPayload, redirectUrl: "http://localhost:9000" },
+      data: {
+        ...fundWalletPayload,
+        redirectUrl: CALLBACK_URL,
+      },
     });
 
     return { data, status };

@@ -1,3 +1,4 @@
+import { BASE_API_URL } from "@env";
 import {
   AuthResponse,
   LoginProps,
