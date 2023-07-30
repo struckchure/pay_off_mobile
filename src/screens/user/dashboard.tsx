@@ -1,23 +1,27 @@
 import React, { useState } from "react";
-import { Image, View } from "react-native";
-import { Button, Div, Icon, Input, Modal, Text } from "react-native-magnus";
-import { useNavigate } from "react-router-native";
+import {
+  Button,
+  Div,
+  Icon,
+  Image,
+  Input,
+  Modal,
+  Text,
+} from "react-native-magnus";
 
 import BaseLayout from "@src/components/layouts/BaseLayout";
 import useAuth from "@src/services/auth/hooks";
 import useTransaction from "@src/services/transaction/hooks";
 import useWallet from "@src/services/wallet/hooks";
+import { formatCurrency } from "@src/shared/utils";
 
 export default function DashboardScreen() {
-  const navigate = useNavigate();
-
   const { user } = useAuth();
   const { wallet, fundWallet } = useWallet();
-  const { transactions } = useTransaction({ transactionStatus: "PENDING" });
+  const { transactions } = useTransaction({ transactionStatus: "SUCCESSFUL" });
 
   const userAvatar: string =
     "https://pbs.twimg.com/profile_images/1621123266176815105/C36lNTho_400x400.jpg";
-  const userWalletBalance: number = +(wallet?.balance || 0.0);
 
   const [isDepositModalOpen, setIsDepositModalOpen] = useState<boolean>(false);
   const [depositAmount, setDepositAmount] = useState<string>();
@@ -39,12 +43,14 @@ export default function DashboardScreen() {
           <Div py={15}>
             {wallet?.accountNumber && (
               <>
-                <View className="p-4">
+                <Div p={"lg"}>
                   <Text color="white">{wallet?.accountNumber}</Text>
                   <Text color="white">{`${user?.firstName} ${user?.lastName}`}</Text>
                   <Text color="white">{wallet?.bankName}</Text>
-                </View>
-                <Text color="white">OR</Text>
+                </Div>
+                <Text color="white" fontSize={"3xl"}>
+                  OR
+                </Text>
               </>
             )}
 
@@ -60,6 +66,7 @@ export default function DashboardScreen() {
                 my={10}
                 onPress={() => {
                   depositAmount && fundWallet({ amount: +depositAmount });
+                  setDepositAmount("0");
                 }}>
                 Generate Payment Link
               </Button>
@@ -72,7 +79,9 @@ export default function DashboardScreen() {
             <Button bg="transparent" p={"none"}>
               <Image
                 source={{ uri: userAvatar }}
-                className="w-10 h-10 rounded-full"
+                rounded={"circle"}
+                w={40}
+                h={40}
               />
             </Button>
 
@@ -80,25 +89,15 @@ export default function DashboardScreen() {
               Hi, {user?.firstName}
             </Text>
           </Div>
-
-          <Div>
-            <Button
-              bg="transparent"
-              p={"none"}
-              onPress={() => navigate("/settings/")}>
-              <Icon
-                fontFamily="AntDesign"
-                name="setting"
-                color="white"
-                fontSize={"6xl"}
-              />
-            </Button>
-          </Div>
         </Div>
 
         <Div>
-          <Text color="white" fontSize={"4xl"} my={"lg"}>
-            &#8358;{userWalletBalance.toFixed(2)}
+          <Text
+            color="white"
+            fontSize={"4xl"}
+            fontFamily="SpaceMono-Regular"
+            my={"lg"}>
+            {formatCurrency(wallet?.balance || 0)}
           </Text>
 
           <Div py={"lg"} row>
@@ -133,7 +132,7 @@ export default function DashboardScreen() {
                 rounded={"xl"}
                 p={"lg"}
                 mb={"sm"}>
-                <View className="flex flex-row items-center justify-start">
+                <Div row justifyContent="space-between" alignItems="center">
                   <Icon
                     name={
                       transaction.transactionType === "CREDIT"
@@ -149,14 +148,12 @@ export default function DashboardScreen() {
                     rounded={"lg"}
                   />
 
-                  <View className="flex flex-col items-start justify-start mx-2">
-                    <Text color="white">{transaction.description}</Text>
-                  </View>
-                </View>
+                  <Text mx={"md"} color="white">
+                    {transaction.description}
+                  </Text>
+                </Div>
 
-                <Text color="white">
-                  &#8358;{(+transaction.amount).toFixed(2)}
-                </Text>
+                <Text color="white">{formatCurrency(transaction.amount)}</Text>
               </Div>
             ))}
           </Div>

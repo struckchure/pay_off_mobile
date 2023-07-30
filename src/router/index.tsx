@@ -6,8 +6,7 @@ import SplashScreen from "@src/screens";
 import LoginScreen from "@src/screens/auth/login";
 import RegisterScreen from "@src/screens/auth/register";
 
-import DashboardScreen from "@src/screens/dashboard";
-import SettingScreen from "@src/screens/dashboard/settings";
+import MainScreen from "@src/screens/user";
 
 export default function Router() {
   return (
@@ -18,8 +17,7 @@ export default function Router() {
         <Route path="/auth/login/" element={<LoginScreen />} />
         <Route path="/auth/register/" element={<RegisterScreen />} />
 
-        <Route path="/dashboard/" element={<DashboardScreen />} />
-        <Route path="/settings/" element={<SettingScreen />} />
+        <Route path="/dashboard/" element={<MainScreen />} />
       </Routes>
     </NativeRouter>
   );
