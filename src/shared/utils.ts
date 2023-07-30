@@ -26,3 +26,13 @@ export function removeNullOrEmptyValues<T = AnyObject>(obj: T): T {
 
   return result as T;
 }
+
+export function formatCurrency(value: number | string) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 2,
+  })
+    .format(+value)
+    .replace("NGN", "₦");
+}
