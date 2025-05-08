@@ -1,4 +1,42 @@
 {
-  "name": "pay_off",
-  "displayName": "Pay Off"
+  "expo": {
+    "name": "pay-off",
+    "slug": "pay-off",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/img/pay_off.png",
+    "scheme": "payoff",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/img/pay_off.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/img/pay_off.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/img/pay_off.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
 }
